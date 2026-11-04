@@ -1,22 +1,21 @@
 # 🎣 Sensibilisation au phishing — Portail Hyperbole Interactive
 
-> ⚠️ **Exercice pédagogique — tout est fictif.**
+> ⚠️ **Exercice pédagogique.**
 > Réalisé dans le cadre du module *Social & Cyber Sécurité* (EFREI Bordeaux).
 > L'éditeur **Hyperbole Interactive**, le studio **Gobelin Hurlant** et les
 > personnes citées sont **imaginaires** (domaine `.example`).
 
 ## 🧩 De quoi s'agit-il ?
 
-Cette page reproduit **ce qu'une victime verrait après avoir cliqué** sur un lien
+Cette page reproduit **ce qu'une victime verrait dans le cadre d'une campagne de phising, avec une fausse page de connexion et de maintenance** sur un lien
 d'hameçonnage ciblé : un faux portail de connexion imitant une entreprise fictive.
 Elle sert à **sensibiliser** à la reconnaissance des pièges (faux domaine, urgence,
 saisie d'identifiants depuis un lien…).
 
-## 🔒 Aucune donnée collectée
+## 🔒 Donnée collectée
 
-Le formulaire est **100 % inerte** : à la soumission, les champs sont vidés **sans
-qu'aucune valeur ne soit lue**, et la page affiche un écran « en travaux ».
-**Rien n'est lu, envoyé, ni stocké.** Aucun identifiant n'est récupéré.
+Le formulaire est **100 % inerte** : L'objectif est de montrer par l'obtention des informations que 
+le phisihing est une menace bien reel en entreprise .
 
 ## 📂 Contenu
 
@@ -24,10 +23,6 @@ qu'aucune valeur ne soit lue**, et la page affiche un écran « en travaux ».
 |---|---|
 | `index.html` | La page piège (auto-suffisante, aucune dépendance) |
 | `README.md` | Ce fichier |
-
-## 🚀 Hébergement
-
-Page publiée via **GitHub Pages** (Settings → Pages → branche `main`, dossier racine).
 
 ## 📝 Contexte
 
