@@ -1,9 +1,9 @@
-# 🛡️ Solution de défense — Gobelin Hurlant
+# Solution de défense — Gobelin Hurlant
 
 Volet *défense* de l'exercice : protéger la cible contre l'attaque d'hameçonnage
 construite sur le portail fictif Hyperbole Interactive.
 
-## 1. Les indices (ce qui trahit l'attaque)
+## 1. Les indices 
 
 1. **Le domaine de l'expéditeur** : `hyperbole-lnteractive` (un « l »), `gobel1n` (un « 1 »). Toujours lire l'adresse complète, lettre à lettre — pas le nom affiché.
 2. **Le lien au survol ≠ le texte affiché.** Survoler (appui long sur mobile) révèle la vraie destination avant de cliquer.
@@ -12,7 +12,7 @@ construite sur le portail fictif Hyperbole Interactive.
 5. **Urgence + secret** : « avant 18 h » et « garde ça entre nous » visent à empêcher toute vérification.
 6. **Un canal inhabituel** : SMS d'un numéro inconnu, un interlocuteur jamais entendu.
 
-## 2. Le protocole (même sans indice repéré)
+## 2. Le protocole 
 
 Conçu pour que l'attaque échoue **même si l'employé n'a rien remarqué** — il repose
 sur une règle mécanique, pas sur la vigilance.
